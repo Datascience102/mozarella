@@ -46,7 +46,7 @@ def melodic_patterns():
     melodies = bank.melodic_patterns
     rythms = bank.rythm_patterns
     recording = []
-    succession = scale.generate_arpegio(1, Note(choice(scale.notes), 4), 4, 0)
+    succession = scale.generate_arpegio(1, Note(choice(scale.notes), 2), 4, 0)
     key_id = 0
     for i in range(0, 8):
         song.clear()

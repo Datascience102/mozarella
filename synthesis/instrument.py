@@ -9,7 +9,17 @@ class Instrument(object):
     
     def get_sample(self, note, octave, volume, start_sampletime, sampletime, end_sample):
         return 0
-
+        
+class Delay(Instrument):
+    def __init__(self, inst, delay):
+        self.delay = delay
+        self.inst = inst
+        
+    def get_sample(self, note, octave, volume, start, t, end):
+        s1 = self.inst.get_sample(note, octave, volume, start, t, end)
+        s2 = self.inst.get_sample(note, octave, volume, start, t-self.delay, end)*0.5
+        return s1+s2
+        
 class ADSREnvelope(Instrument):
     def __init__(self, inst, attack, decay, sustain, release, attack_peak=1.0, decay_descent=0.5):
         self.inst = inst
@@ -76,8 +86,8 @@ class MultipleOscillator(Instrument):
                 coefs = 0
                 # Pour chaque "raie" de spectre
                 for multiplier, volume, offset in self.spectrum:
-                    value += self.compute_sample(note, int(octave*multiplier), volume, 0, t+offset*chunk_size, chunk_size)
-                    #value += self.compute_sample(note, int(octave*multiplier), volume, 0, t*(1+offset), chunk_size)
+                    #value += self.compute_sample(note, int(octave*multiplier), volume, 0, t+offset*chunk_size, chunk_size)
+                    value += self.compute_sample(note, int(octave*multiplier), volume, 0, t*(1+offset), chunk_size)
                     coefs += volume
                     
                 chunk.append(value/coefs)

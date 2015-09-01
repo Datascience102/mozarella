@@ -16,7 +16,7 @@ for i, multiplier in enumerate([1]):
 melo = MultipleOscillator(spec2)
 
 # ----------- sinus ----------
-sinus = MultipleOscillator([(1, 1, 0), (2, 0.25, 0.05), (3, 0.125, 0.025)])
+sinus = MultipleOscillator([(1, 1, 0), (2, 0.125, 0.05), (3, 0.125, 0.025)])
 sinus = ADSREnvelope(sinus, 0.10, 0.2, 0.8, 1, 1, 0.4)
 
 # test
@@ -30,4 +30,5 @@ for i in range(0, 1000):
     spec3.append((multiplier, volume, offset))
 
 test = MultipleOscillator(spec3)
-test = ADSREnvelope(test, 0.10, 0.2, 0.8, 1, 1, 0.4)
+test = ADSREnvelope(hardsynth, 0.05, 0.5, 0.8, 1, 1, 0.4)
+test = Delay(test, 441)
